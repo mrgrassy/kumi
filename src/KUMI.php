@@ -1511,7 +1511,7 @@ class KUMIError
 	 *
 	 * @return KUMIError
 	 */
-	public function setCode(mixed $code):KUMIError
+	public function setCode(?mixed $code):KUMIError
 	{
 		$this->code = $code;
 		return $this;
@@ -1522,7 +1522,7 @@ class KUMIError
 	 *
 	 * @return KUMIError
 	 */
-	public function setDescription(string $description):KUMIError
+	public function setDescription(?string $description):KUMIError
 	{
 		$this->description = $description;
 		return $this;
@@ -1531,7 +1531,7 @@ class KUMIError
 	/**
 	 * @return mixed
 	 */
-	public function getCode():mixed
+	public function getCode():?mixed
 	{
 		return $this->code;
 	}
@@ -1539,7 +1539,7 @@ class KUMIError
 	/**
 	 * @return string
 	 */
-	public function getDescription():string
+	public function getDescription():?string
 	{
 		return $this->description;
 	}
