@@ -262,7 +262,7 @@ class KUMI
 	public function getDatasArray():array
 	{
 		return array(
-			'$username'                      => $this->username,
+			'username'                      => $this->username,
 			'password'                       => $this->password,
 			'recorder'                       => $this->recorder,
 			'company_site'                   => $this->company_site,
