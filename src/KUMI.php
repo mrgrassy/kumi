@@ -220,7 +220,7 @@ class KUMI
 	/**
 	 * @return \KUMI\KUMIResult
 	 */
-	public function createPackage(): KUMIResult
+	public function createPackage(): ?KUMIResult
 	{
 		$data = $this->getDatasArray();
 		$url = 'https://csomagkezeles.hu/api/createPackage';
