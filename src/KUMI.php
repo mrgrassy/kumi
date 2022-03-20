@@ -213,8 +213,8 @@ class KUMI
 	 * @var mixed
 	 */
 	private mixed $extra_services;
-	private mixed $package_status;
-	private mixed $package_condition;
+	private int $package_status;
+	private int $package_condition;
 	// </editor-fold>
 	// <editor-fold desc="ACTIONS">
 	/**
@@ -296,7 +296,7 @@ class KUMI
 			'recipient_creaditcard'          => $this->recipient_creaditcard,
 			'recipient_date'                 => $this->recipient_date,
 			'content'                        => $this->content,
-			'foreign_identifier'             => $this->foreign_identifier,
+			'foreign_identifier'             => 0,
 			'boxes'                          => $this->boxes,
 			'weight'                         => $this->weight,
 			'cost_declaration'               => $this->cost_declaration,
