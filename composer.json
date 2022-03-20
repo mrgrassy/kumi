@@ -1,0 +1,11 @@
+{
+  "name": "mrgrassy/kumi",
+  "type": "project",
+  "description": "Kumi Logisztika API composer package",
+  "keywords": ["Delivery API"],
+  "homepage": "https://github.com/mrgrassy/kumi",
+  "license": "MIT",
+  "require-dev": {
+    "php": ">=7.3"
+  }
+}
