@@ -232,25 +232,26 @@ class KUMI
 		$response = curl_exec($ch);
 		curl_close($ch);
 		$return_data= json_decode($response);
-		$result = new KUMIResult();
-		$result->setSuccessfull(boolval($return_data->successfull));
-		if($return_data->successfull)
-		{
-			$packages=[];
-			foreach ($return_data->datas->packages as $index => $package) {
-				$packages[$index]=new KUMIPackage();
-				$packages[$index]->setCustomerForeignIdentifier($package->customer_foreign_identifier);
-				$packages[$index]->setFollowlink($package->followlink);
-				$packages[$index]->setSecurecode($package->securecode);
-				$packages[$index]->setPackagenumber($package->packagenumber);
-				$packages[$index]->setShowablePackagenumber($package->showable_packagenumber);
+		if($return_data) {
+			$result = new KUMIResult();
+			$result->setSuccessfull(boolval($return_data->successfull));
+			if ($return_data->successfull) {
+				$packages = [];
+				foreach ($return_data->datas->packages as $index => $package) {
+					$packages[$index] = new KUMIPackage();
+					$packages[$index]->setCustomerForeignIdentifier($package->customer_foreign_identifier);
+					$packages[$index]->setFollowlink($package->followlink);
+					$packages[$index]->setSecurecode($package->securecode);
+					$packages[$index]->setPackagenumber($package->packagenumber);
+					$packages[$index]->setShowablePackagenumber($package->showable_packagenumber);
+				}
+				$result->setPackage($packages);
+			} else {
+				$error = new KUMIError();
+				$error->setCode($return_data->error->code);
+				$error->setDescription($return_data->error->description);
+				$result->setError($error);
 			}
-			$result->setPackage($packages);
-		}else{
-			$error= new KUMIError();
-			$error->setCode($return_data->error->code);
-			$error->setDescription($return_data->error->description);
-			$result->setError($error);
 		}
 		return $result;
 	}
@@ -1504,7 +1505,7 @@ class KUMIPackage
 class KUMIError
 {
 	private mixed $code;
-	private string $description;
+	private ?string $description;
 
 	/**
 	 * @param mixed $code
