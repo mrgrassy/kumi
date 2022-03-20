@@ -5,6 +5,14 @@
   "keywords": ["Delivery API"],
   "homepage": "https://github.com/mrgrassy/kumi",
   "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    },
+    "classmap": [
+      "src/KUMI.php",
+    ]
+  },
   "require-dev": {
     "php": ">=7.3"
   }
