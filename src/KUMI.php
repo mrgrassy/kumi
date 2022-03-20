@@ -232,6 +232,7 @@ class KUMI
 		$response = curl_exec($ch);
 		curl_close($ch);
 		$return_data= json_decode($response);
+		$result=null;
 		if($return_data) {
 			$result = new KUMIResult();
 			$result->setSuccessfull(boolval($return_data->successfull));
