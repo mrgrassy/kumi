@@ -22,9 +22,9 @@ class KUMI
 	 */
 	private string $recorder;
 	/**
-	 * @var string
+	 * @var int
 	 */
-	private string $company_site;
+	private int $company_site;
 	/**
 	 * @var int
 	 */
@@ -223,7 +223,7 @@ class KUMI
 	public function createPackage(): ?KUMIResult
 	{
 		$data = $this->getDatasArray();
-		$url = 'https://csomagkezeles.hu/api/createPackage';
+		$url = 'https://csomagkezeles.hu/API/createPackage';
 		$ch = curl_init($url);
 		$postString = http_build_query($data, '', '&');
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -235,26 +235,28 @@ class KUMI
 		curl_close($ch);
 		$return_data= json_decode($response);
 		$result=null;
+		$result = new KUMIResult();
 		if($return_data) {
-			$result = new KUMIResult();
-			$result->setSuccessfull(boolval($return_data->successfull));
-			if ($return_data->successfull) {
-				$packages = [];
-				foreach ($return_data->datas->packages as $index => $package) {
+			$packages = [];
+			$index=0;
+			foreach ($return_data->packages as $package) {
+				$result->setSuccessfull($package->successfull);
+				if ($package->successfull) {
 					$packages[$index] = new KUMIPackage();
 					$packages[$index]->setCustomerForeignIdentifier($package->customer_foreign_identifier);
 					$packages[$index]->setFollowlink($package->followlink);
 					$packages[$index]->setSecurecode($package->securecode);
 					$packages[$index]->setPackagenumber($package->packagenumber);
 					$packages[$index]->setShowablePackagenumber($package->showable_packagenumber);
+					$index++;
+				} else {
+					$error = new KUMIError();
+					$error->setCode($return_data->error->code);
+					$error->setDescription($return_data->error->description);
+					$result->setError($error);
 				}
-				$result->setPackage($packages);
-			} else {
-				$error = new KUMIError();
-				$error->setCode($return_data->error->code);
-				$error->setDescription($return_data->error->description);
-				$result->setError($error);
 			}
+			$result->setPackage($packages);
 		}
 		return $result;
 	}
@@ -266,7 +268,7 @@ class KUMI
 	public function getDatasArray():array
 	{
 		return array(
-			'username'                      => $this->username,
+			'username'                       => $this->username,
 			'password'                       => $this->password,
 			'recorder'                       => $this->recorder,
 			'company_site'                   => $this->company_site,
@@ -1366,7 +1368,7 @@ class KUMIResult
 	 */
 	public function isSuccessfull(): bool
 	{
-		return $this->successfull;
+		return $this->successfull?1:0;
 	}
 
 	/**
